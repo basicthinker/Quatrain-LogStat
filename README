@@ -1,2 +1,7 @@
-List target log file names in file.list.
-Run the shell script run.sh.
+Directory "server":
+  List target log file names in file.list.
+  Run the shell script run.sh.
+
+Directory "client":
+  Save the output log of sequential requests as a file "SR.log".
+  Run the shell script run.sh.

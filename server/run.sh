@@ -7,4 +7,4 @@
 ./gen-plt-table # generates LogFileName.table
 
 # depending on LogFileName.interval and cpu/network usage logs
-
+./gen-plt-usage
