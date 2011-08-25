@@ -30,6 +30,19 @@ int main() {
   net_file.open("net-stat.csv");
   const bool is_net = !net_file.fail();
   
+  char c;
+  string comment;
+  if (is_cpu) {
+    while (c = cpu_file.peek(), c < '0' || c > '9') {
+      getline(cpu_file, comment); // read in comments
+    }
+  }
+  if (is_net) {
+    while (c = net_file.peek(), c < '0' || c > '9') {
+      getline(net_file, comment); // read in comments
+    }
+  }
+
   if (!is_cpu && !is_net) {
     cerr << "Neither cpu usage nor net stat files are provided." << endl;
     return -1;
@@ -54,16 +67,7 @@ int main() {
     int usage1, usage2, usage3;
     int port_usage1, port_usage2, port_usage3, recv_q1, recv_q2, recv_q3, send_q1, send_q2, send_q3, cur_port_usage, cur_recv_q, cur_send_q;
 
-    char c;
-    string comment;
-    while (c = cpu_file.peek(), c < '0' || c > '9') {
-      getline(cpu_file, comment); // read in comments
-    }
     cpu_file >> cur_time_cpu;
-    
-    while (c = net_file.peek(), c < '0' || c > '9') {
-      getline(net_file, comment); // read in comments
-    }
     net_file >> cur_time_net;
 
     while (interval_file >> task_time >> num_return >> begin_time >> end_time) {
