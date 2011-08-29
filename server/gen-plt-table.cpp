@@ -21,7 +21,7 @@ bool compare(const Value& a, const Value& b) {
 
 int main() {
   if (!freopen("file.list", "r", stdin)) {
-    cout << "Please list target log files and save their names in a file 'file.list'." << endl;
+    cout << "Please list log file names in the file 'file.list'." << endl;
     return 1;
   }
 

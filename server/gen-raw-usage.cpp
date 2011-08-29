@@ -4,7 +4,7 @@
 #include <string>
 #include <algorithm>
 
-#define NUM_CORES 24
+#define CORE_CNT 24
 
 using namespace std;
 
@@ -58,7 +58,7 @@ int main() {
     }
 
     ofstream usage_file;
-    usage_file.open((*it + ".usage").c_str());
+    usage_file.open((*it + ".raw-usage").c_str());
     usage_file << "# Task time\t" << "Num of returns\t" << "CPU usage per core\t";
     usage_file << "Num of connections\t" << "Median of Recv-Q\t" << "Median of Send-Q" << endl;
 
@@ -91,7 +91,7 @@ int main() {
           }
         } while (cpu_file >> cur_time_cpu);
         if (valid_cnt != 0) {
-          cpu_usage = cpu_usage / valid_cnt / NUM_CORES;
+          cpu_usage = cpu_usage / valid_cnt / CORE_CNT;
         }
       } 
       usage_file << cpu_usage << "\t";
