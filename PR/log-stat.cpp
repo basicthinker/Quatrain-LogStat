@@ -26,10 +26,10 @@ int main() {
     log_file.open(it->c_str());
 
     ofstream latency_file;
-    latency_file.open((file_name + ".latency").c_str());
+    latency_file.open((*it + ".latency").c_str());
 
     ofstream interval_file;
-    interval_file.open((file_name + ".interval").c_str());
+    interval_file.open((*it + ".interval").c_str());
 
     double time;
     int task_time;
