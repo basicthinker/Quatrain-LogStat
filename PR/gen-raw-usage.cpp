@@ -1,3 +1,7 @@
+/* NOTICE: the files in file.list should be listed by increasing order of modification times. 
+ * Reference shell command: $ ls -rt > file.list; vim file.list
+*/
+
 #include <iostream>
 #include <fstream>
 #include <vector>
@@ -32,15 +36,18 @@ int main() {
   
   char c;
   string comment;
+  long long cur_time_cpu, cur_time_net;
   if (is_cpu) {
     while (c = cpu_file.peek(), c < '0' || c > '9') {
       getline(cpu_file, comment); // read in comments
     }
+    cpu_file >> cur_time_cpu;
   }
   if (is_net) {
     while (c = net_file.peek(), c < '0' || c > '9') {
       getline(net_file, comment); // read in comments
     }
+    net_file >> cur_time_net;
   }
 
   if (!is_cpu && !is_net) {
@@ -63,12 +70,9 @@ int main() {
     usage_file << "Num of connections\t" << "Median of Recv-Q\t" << "Median of Send-Q" << endl;
 
     int task_time, num_return;
-    long long begin_time, end_time, cur_time_cpu, cur_time_net;
+    long long begin_time, end_time;
     int usage1, usage2, usage3;
-    int port_usage1, port_usage2, port_usage3, recv_q1, recv_q2, recv_q3, send_q1, send_q2, send_q3, cur_port_usage, cur_recv_q, cur_send_q;
-
-    cpu_file >> cur_time_cpu;
-    net_file >> cur_time_net;
+    int port_usage1, port_usage2, recv_q1, recv_q2, send_q1, send_q2, cur_port_usage, cur_recv_q, cur_send_q;
 
     while (interval_file >> task_time >> num_return >> begin_time >> end_time) {
       usage_file << task_time << "\t" << num_return << "\t"; 
@@ -77,14 +81,14 @@ int main() {
         int valid_cnt = 0;
         do {
           if (cur_time_cpu >= begin_time && cur_time_cpu <= end_time) {
-            cpu_file >> usage1 >> usage2 >> usage3;
-            int cur_usage = usage1 + usage2 + usage3;
+            cpu_file >> usage1 >> usage2;
+            int cur_usage = usage1 + usage2;
             if (cur_usage > 3) {
               ++valid_cnt;
               cpu_usage += cur_usage;
             }
           } else if (cur_time_cpu < begin_time) {
-            cpu_file >> usage1 >> usage2 >> usage3;
+            cpu_file >> usage1 >> usage2;
             continue;
           } else if (cur_time_cpu > end_time) {
             break;
@@ -106,11 +110,10 @@ int main() {
           if (cur_time_net >= begin_time && cur_time_net <= end_time) {
             net_file >> port_usage1 >> recv_q1 >> send_q1;
             net_file >> port_usage2 >> recv_q2 >> send_q2;
-            net_file >> port_usage3 >> recv_q3 >> send_q3;
 
-            cur_port_usage = port_usage1 + port_usage2 + port_usage3 - 2; // only one of the three should be included, and the other two are, in most cases, separately equal to 1
-            cur_recv_q = recv_q1 + recv_q2 + recv_q3;
-            cur_send_q = send_q1 + send_q2 + send_q3;
+            cur_port_usage = port_usage1 + port_usage2; // only one of the three should be included
+            cur_recv_q = recv_q1 + recv_q2;
+            cur_send_q = send_q1 + send_q2;
 
             if (cur_port_usage > max_conn) max_conn = cur_port_usage;
             if (cur_recv_q > 0) {
@@ -122,7 +125,6 @@ int main() {
           } else if (cur_time_net < begin_time) {
             net_file >> port_usage1 >> recv_q1 >> send_q1;
             net_file >> port_usage2 >> recv_q2 >> send_q2;
-            net_file >> port_usage3 >> recv_q3 >> send_q3;
           } else if (cur_time_net > end_time) {
             break;
           }
@@ -147,7 +149,6 @@ int main() {
       }
       usage_file << max_conn << "\t" << median_recv << "\t" << median_send << endl;
     }
-
     usage_file.close();
     interval_file.close();
   } // for each log file
