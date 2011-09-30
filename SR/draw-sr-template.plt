@@ -1,9 +1,8 @@
 # Draw SE with 100/1k/10k tasks.
-set size 1, 1.2
 set origin $2, $3
 set xrange [0:25]
 set yrange [0:$1*1.1]
-set ytics $1*0.1
+set ytics $1*0.2
 set ytics nomirror
 set y2range [0:100]
 set y2tics 10
