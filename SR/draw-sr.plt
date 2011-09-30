@@ -1,17 +1,46 @@
-# Draw SE with 100/1k/10k tasks.
-set terminal postscript
-set output 'SRSE-100.eps'
+set terminal postscript font 30
+set output "eva-micro-low-left.eps"
+set rmarg 5
+set size 1,2.4
+set multiplot
+set ylabel 'Sequential-execution AAT (ms)'
+call "draw-sr-template.plt" SRSE 100 0 1.2
+set bmarg 4
 set xlabel 'Number of returns'
-set xrange [0:25]
-set ylabel 'Latency (ms)'
-set yrange [0:110]
+set ylabel 'Parallel-execution AAT (ms)'
+call "draw-sr-template.plt" SRPE 100 0 0
+unset xlabel
+unset ylabel
+unset bmarg
+unset rmarg
+unset multiplot
+
+set terminal postscript font 30
+set output "eva-micro-low-mid.eps"
+set lmarg 5
+set rmarg 5
+set size 1,2.4
+set multiplot
+call "draw-sr-template.plt" SRSE 1000 0 1.2
+set bmarg 4
+set xlabel 'Number of returns'
+call "draw-sr-template.plt" SRPE 1000 0 0
+unset xlabel
+unset bmarg
+unset lmarg
+unset rmarg
+unset multiplot
+
+set terminal postscript font 30
+set output "eva-micro-low-right.eps"
+set lmarg 5
+set size 1,2.4
+set multiplot
 set y2label '% CPU usage per core'
-set y2range [0:100]
-plot "SRSE-TBB100.in" using 1:2 axes x1y1 title 'Thread-based' with linespoints, \
-    "SRSE-TBB100.in" using 1:4 axes x1y2 title 'TB CPU' with linespoints, \
-    "SRSE-TB100.in" using 1:2 axes x1y1 title 'Event-based' with linespoints, \
-    "SRSE-TB100.in" using 1:4 axes x1y2 title 'EB CPU' with linespoints, \
-    "SR-100-ideal.in" using 1:2 axes x1y1 title 'Ideal' with linespoints
-
-# set output 'SRPE-100.eps'
-
+call "draw-sr-template.plt" SRSE 10000 0 1.2
+set bmarg 4
+set xlabel 'Number of returns'
+call "draw-sr-template.plt" SRPE 10000 0 0
+unset xlabel
+unset bmarg
+unset multiplot
