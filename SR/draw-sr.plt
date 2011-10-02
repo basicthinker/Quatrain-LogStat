@@ -38,12 +38,14 @@ unset rmarg
 unset multiplot
 
 set terminal postscript font 30 eps
-set size 1,2.4
+set size 1.1,2.4
 set output "eva-micro-low-right.eps"
-set lmarg 5
+set lmarg 6
+set rmarg 5
 set multiplot
 set y2label '% CPU usage per core'
 set size 1,1.2
+set y2tics format "%g"
 call "draw-sr-template.plt" SRSE 10000 0 1.2
 set bmarg 4
 set xlabel 'Number of returns'
