@@ -1,4 +1,4 @@
-set terminal postscript font 30 eps
+set terminal postscript font 35 eps
 set size 1,2.4
 set output "eva-micro-low-left.eps"
 set rmarg 2
@@ -18,7 +18,7 @@ unset bmarg
 unset rmarg
 unset multiplot
 
-set terminal postscript font 30 eps
+set terminal postscript font 35 eps
 set size 0.9,2.4
 set output "eva-micro-low-mid.eps"
 set lmarg 5
@@ -37,7 +37,7 @@ unset lmarg
 unset rmarg
 unset multiplot
 
-set terminal postscript font 30 eps
+set terminal postscript font 35 eps
 set size 1.1,2.4
 set output "eva-micro-low-right.eps"
 set lmarg 6

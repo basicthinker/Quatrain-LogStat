@@ -1,4 +1,4 @@
-set terminal postscript font 22 eps
+set terminal postscript font 25 eps
 set output "eva-micro-high-right.eps"
 set size 1,2
 
@@ -14,7 +14,7 @@ set y2range [10:20000]
 set y2label "# active connections"
 set y2tics nomirror
 set logscale y2
-set key at 10,8000
+set key at 12,8000
 plot "hprose-t100-r24-PR-p3000@1679368083.table" using 1:4 axes x1y1 title '' with lines lt 2 lw 2, \
     "hprose-t100-r24-PR-p3000@1679368083.table" using 1:4:5 axes x1y1 title 'TB AAT' with yerrorbars lt 2 lw 2, \
     23.7439 axes x1y1 title '' with lines lt 2 lw 2, \

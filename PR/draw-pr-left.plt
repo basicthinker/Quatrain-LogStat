@@ -1,4 +1,4 @@
-set terminal postscript font 22 eps
+set terminal postscript font 25 eps
 set output "eva-micro-high-left.eps"
 set size 1,2
 
